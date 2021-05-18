@@ -58,7 +58,7 @@ class Application
                 }
             }
             
-            if ($area === 'protected' && !$this->session->get('user_subscribed') && !in_array($route, [
+            if ($this->config::SITE['subscribe_check'] && $area === 'protected' && !$this->session->get('user_subscribed') && !in_array($route, [
                 'home', 
                 'logout',
                 'api/paypal-payment/create-payment',
