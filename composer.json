@@ -1,0 +1,24 @@
+{
+    "name": "gyula/mailer",
+    "description": "Mailer App",
+    "authors": [
+        {
+            "name": "Gyula Madarasz",
+            "email": "gyula.madarasz@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Madlib\\": "lib/",
+            "Mailer\\": "src/"
+        }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.1",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.12.84"
+    }
+
+}
