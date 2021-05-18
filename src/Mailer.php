@@ -7,6 +7,7 @@ use Madlib\Message;
 use Madlib\Mailer as MadMailer;
 use Madlib\Input;
 use Madlib\Validator;
+use Madlib\Mysql;
 
 class Mailer {
 
@@ -15,17 +16,19 @@ class Mailer {
     protected MadMailer $mailer;
     protected Input $input;
     protected Validator $validator;
+    protected Mysql $mysql;
 
-    public function __construct(Page $page, Message $message, MadMailer $mailer, Input $input, Validator $validator) {
+    public function __construct(Page $page, Message $message, MadMailer $mailer, Input $input, Validator $validator, Mysql $mysql) {
         $this->page = $page;
         $this->message = $message;
         $this->mailer = $mailer;
         $this->input = $input;
         $this->validator = $validator;
+        $this->mysql = $mysql;
     }
 
-    public function view(): void {
-        $this->page->show('mailer/mailer');
+    public function view(array $data = []): void {
+        $this->page->show('mailer/mailer', $data);
     }
 
     public function send(): void {
@@ -44,9 +47,20 @@ class Mailer {
             !$this->validator->validate('required', $body)
         ) {
             $this->message->error('Invalid input(s)');
-            $this->view();
+            $this->view([
+                'to_email' => $to_email,
+                'from_email' => $from_email,
+                'from_name' => $from_name,
+                'subject' => $subject,
+                'body' => $body,
+            ]);
             return;
         }
+
+        $this->mysql->insert("
+            INSERT INTO sent_mail ('from_email', 'from_name', 'to_email', 'subject', 'body') 
+            VALUES ('$from_email', '$from_name', '$to_email', '$subject', '$body')
+        ");
         
         $phpmailer = $this->mailer->getPhpMailer();
         $phpmailer->setFrom($from_email, $from_name);
