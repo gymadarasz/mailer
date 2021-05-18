@@ -58,7 +58,7 @@ class Mailer {
         }
 
         $this->mysql->insert("
-            INSERT INTO sent_mail ('from_email', 'from_name', 'to_email', 'subject', 'body') 
+            INSERT INTO sent_mail (from_email, from_name, to_email, subject, body) 
             VALUES ('$from_email', '$from_name', '$to_email', '$subject', '$body')
         ");
         
