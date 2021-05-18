@@ -1,5 +1,5 @@
 <h1>Home</h1>
-
+<?php /*
 <if $user_subscribed:>
     Subscribed until: {$user_subscribed_until_at}
 <else>
@@ -52,5 +52,6 @@
 
     </div>
 </if>
+*/ ?>
 <br />
 <a href="{$__base}delete-me" onclick="return confirm('You are attempting to delete your account. This could cause a loss of your subscription and other data. The operation can not be reverted. Are you sure?')">Delete my account</a>
