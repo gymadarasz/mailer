@@ -8,6 +8,7 @@ use Madlib\Mailer as MadMailer;
 use Madlib\Input;
 use Madlib\Validator;
 use Madlib\Mysql;
+use Madlib\Session;
 
 class Mailer {
 
@@ -17,14 +18,16 @@ class Mailer {
     protected Input $input;
     protected Validator $validator;
     protected Mysql $mysql;
+    protected Session $session;
 
-    public function __construct(Page $page, Message $message, MadMailer $mailer, Input $input, Validator $validator, Mysql $mysql) {
+    public function __construct(Page $page, Message $message, MadMailer $mailer, Input $input, Validator $validator, Mysql $mysql, Session $session) {
         $this->page = $page;
         $this->message = $message;
         $this->mailer = $mailer;
         $this->input = $input;
         $this->validator = $validator;
         $this->mysql = $mysql;
+        $this->session = $session;
     }
 
     public function view(array $data = []): void {
