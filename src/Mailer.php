@@ -32,6 +32,7 @@ class Mailer {
     }
 
     public function send(): void {
+        $user_id = (int)$this->session->get('user_id');
         $to_email = $this->input->getString('to_email');
         $from_email = $this->input->getString('from_email');
         $from_name = $this->input->getString('from_name');
@@ -39,6 +40,7 @@ class Mailer {
         $body = $this->input->getString('body');
 
         if (
+            !$this->validator->validate('required', $user_id) ||
             !$this->validator->validate('required', $to_email) ||
             !$this->validator->validate('email', $to_email) ||
             !$this->validator->validate('required', $from_email) ||
@@ -57,9 +59,10 @@ class Mailer {
             return;
         }
 
+
         $this->mysql->insert("
-            INSERT INTO sent_mail (from_email, from_name, to_email, subject, body) 
-            VALUES ('$from_email', '$from_name', '$to_email', '$subject', '$body')
+            INSERT INTO sent_mail (user_id, from_email, from_name, to_email, subject, body) 
+            VALUES ('$user_id', '$from_email', '$from_name', '$to_email', '$subject', '$body')
         ");
         
         $phpmailer = $this->mailer->getPhpMailer();
