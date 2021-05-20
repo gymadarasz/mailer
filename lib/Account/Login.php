@@ -117,7 +117,7 @@ class Login
             $this->redirect->go('home');
             return;
         }
-        if (!(int)$user['activated'] && $this->token->reset($email, 'activation')) {
+        if (!(int)($user['activated'] ?? 0) && $this->token->reset($email, 'activation')) {
             if ($this->anonym->isAnonymEmail($email)) {
                 $this->message->error('Login failed');
                 $this->redirect->go('login');
