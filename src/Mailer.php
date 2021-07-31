@@ -73,7 +73,7 @@ class Mailer {
         $phpmailer->addReplyTo($from_email, $from_name);
         $phpmailer->addAddress($to_email);
         $phpmailer->Subject = $subject;
-        $phpmailer->Body = $body;
+        $phpmailer->Body = \nl2br($body);
         $phpmailer->AltBody = $body;
 
         $phpmailer->send();
